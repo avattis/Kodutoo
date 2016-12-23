@@ -13,12 +13,8 @@ public class SudokuBoard extends Application {
     GridPane box;
     Button end;
     public int[][] arr;
-
     public int[][] masks;
-
     int size = 27;
-
-
 
     public void start(Stage primaryStage) throws Exception {
         Genereernumbrid genNr = new Genereernumbrid(); // toob Genereerinumbritest l
@@ -47,7 +43,6 @@ public class SudokuBoard extends Application {
 
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
-               //box.setStyle("-fx-background-color: black, -fx-control-inner-background; -fx-background-insets: 0, 2; -fx-padding: 2;");
                 if (masks[row][column] == 0) { //null paneb numbri
                     Label label = new Label(Integer.toString(arr[row][column]));
                     label.setStyle("-fx-pref-width: 2em;");
@@ -72,7 +67,6 @@ public class SudokuBoard extends Application {
 
         box.setGridLinesVisible(true);
 
-       // box = new GridPane();
         end = new Button("Lõpeta mäng");
         end.setStyle("-fx-font: 15 arial; -fx-base: #b6e7c9;");
         end.setOnAction(new EventHandler<ActionEvent>() {
@@ -86,28 +80,35 @@ public class SudokuBoard extends Application {
                 loppStage.show();
             }
         });
-        Line line = new Line(0, 0, 0, 9*size);
+        //sudokulaua jooned
+        int yks = 5;
+        int kaks = 3*size+5;
+        int kolm = 6*size+5;
+        int neli = 9*size+5;
+        Line line = new Line(yks, yks, yks, neli);
         line.setStyle("-fx-stroke: black;-fx-stroke-width: 3;");
-        Line line1 = new Line(3*size, 0, 3*size, 9*size);
+        Line line1 = new Line(kaks, yks, kaks, neli);
         line1.setStyle("-fx-stroke: black;-fx-stroke-width: 3;");
-        Line line2 = new Line(6*size, 0, 6*size, 9*size);
+        Line line2 = new Line(kolm, yks, kolm, neli);
         line2.setStyle("-fx-stroke: black;-fx-stroke-width: 3;");
-        Line line3 = new Line(9*size, 0, 9*size, 9*size);
+        Line line3 = new Line(neli, yks, neli, neli);
         line3.setStyle("-fx-stroke: black;-fx-stroke-width: 3;");
-        Line line4 = new Line(0, 0, 9*size, 0);
+        Line line4 = new Line(yks, yks, neli, yks);
         line4.setStyle("-fx-stroke: black;-fx-stroke-width: 3;");
-        Line line5 = new Line(0, 3*size, 9*size, 3*size);
+        Line line5 = new Line(yks, kaks, neli, kaks);
         line5.setStyle("-fx-stroke: black;-fx-stroke-width: 3;");
-        Line line6 = new Line(0, 6*size, 9*size, 6*size);
+        Line line6 = new Line(yks, kolm, neli, kolm);
         line6.setStyle("-fx-stroke: black;-fx-stroke-width: 3;");
-        Line line7 = new Line(0, 9*size, 9*size, 9*size);
+        Line line7 = new Line(yks, neli, neli, neli);
         line7.setStyle("-fx-stroke: black;-fx-stroke-width: 3;");
 
 
 
         anchor.getChildren().addAll(box, end, line,line1,line2,line3,line4,line5,line6,line7);
-        anchor.setBottomAnchor(end, 40.0);
-        anchor.setRightAnchor(end, 40.0);
+        anchor.setLeftAnchor(box, 5.0);
+        anchor.setTopAnchor(box, 5.0);
+        anchor.setBottomAnchor(end, 20.0);
+        anchor.setRightAnchor(end, 20.0);
 
         stage.setScene(new Scene(anchor, 400,300));
         stage.show();
