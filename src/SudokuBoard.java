@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
@@ -14,6 +15,8 @@ public class SudokuBoard extends Application {
     public int[][] arr;
 
     public int[][] masks;
+
+    int size = 27;
 
 
 
@@ -35,26 +38,16 @@ public class SudokuBoard extends Application {
         AnchorPane anchor = new AnchorPane();
 
         box = new GridPane();
-        for (int col = 0; col< 3; col++) {
-            for (int colum = 0;colum < 3; colum++) {
-                GridPane board = new GridPane();
-                board.setStyle("-fx-background-color: black, -fx-control-inner-background; -fx-background-insets: 0, 2; -fx-padding: 4;");
-                for (int column = 0; column < 3; column++) {
-                    for (int row = 0 ; row < 3; row++) {
-                        board.setStyle("-fx-background-color: black, -fx-control-inner-background; -fx-background-insets: 0, 2; -fx-padding: 2;");
-                        GridPane.setConstraints(board, column, row);
-                    }
-                }
-                GridPane.setConstraints(board, col, colum);
-                box.getChildren().add(board);
+        for (int i = 0; i < 9; i++) {
+            box.getColumnConstraints().add(new ColumnConstraints(size)); //veeru laius
+            for (int j = 0; j < 1; j++) {
+                box.getRowConstraints().add(new RowConstraints(size)); //rea kõrgus
             }
         }
 
-
-
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
-               // box.setStyle("-fx-background-color: black, -fx-control-inner-background; -fx-background-insets: 0, 2; -fx-padding: 2;");
+               //box.setStyle("-fx-background-color: black, -fx-control-inner-background; -fx-background-insets: 0, 2; -fx-padding: 2;");
                 if (masks[row][column] == 0) { //null paneb numbri
                     Label label = new Label(Integer.toString(arr[row][column]));
                     label.setStyle("-fx-pref-width: 2em;");
@@ -93,9 +86,26 @@ public class SudokuBoard extends Application {
                 loppStage.show();
             }
         });
+        Line line = new Line(0, 0, 0, 9*size);
+        line.setStyle("-fx-stroke: black;-fx-stroke-width: 3;");
+        Line line1 = new Line(3*size, 0, 3*size, 9*size);
+        line1.setStyle("-fx-stroke: black;-fx-stroke-width: 3;");
+        Line line2 = new Line(6*size, 0, 6*size, 9*size);
+        line2.setStyle("-fx-stroke: black;-fx-stroke-width: 3;");
+        Line line3 = new Line(9*size, 0, 9*size, 9*size);
+        line3.setStyle("-fx-stroke: black;-fx-stroke-width: 3;");
+        Line line4 = new Line(0, 0, 9*size, 0);
+        line4.setStyle("-fx-stroke: black;-fx-stroke-width: 3;");
+        Line line5 = new Line(0, 3*size, 9*size, 3*size);
+        line5.setStyle("-fx-stroke: black;-fx-stroke-width: 3;");
+        Line line6 = new Line(0, 6*size, 9*size, 6*size);
+        line6.setStyle("-fx-stroke: black;-fx-stroke-width: 3;");
+        Line line7 = new Line(0, 9*size, 9*size, 9*size);
+        line7.setStyle("-fx-stroke: black;-fx-stroke-width: 3;");
 
 
-        anchor.getChildren().addAll(box, end);
+
+        anchor.getChildren().addAll(box, end, line,line1,line2,line3,line4,line5,line6,line7);
         anchor.setBottomAnchor(end, 40.0);
         anchor.setRightAnchor(end, 40.0);
 
