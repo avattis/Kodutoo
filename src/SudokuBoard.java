@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 
 public class SudokuBoard extends Application {
@@ -17,7 +19,7 @@ public class SudokuBoard extends Application {
     Button end;
     public int[][] arr;
     public int[][] masks;
-    public int[][] kasutaja;
+
 
     int size = 27;
 
@@ -86,16 +88,33 @@ public class SudokuBoard extends Application {
                     }
                 }
                 System.out.println(kasutajalt); //vihjed konsooli
+                List<Integer> kasutaja = new ArrayList<Integer>();
+                for (Object str : kasutajalt) {
+                    kasutaja.add(Integer.parseInt((String)str));
+                }
+
+                Integer arrkas[]=kasutaja.toArray(new Integer[kasutaja.size()]);
+
+		/*Displaying Array elements*/
+                for(Integer k: arrkas)
+                {
+                    System.out.println(k);
+                }
+                Integer test[][]=new Integer[9][9];
+                int count = 0;
+                for(int i=0;i<9;i++) {
+                    for(int j=0;j<9;j++) {
+                        test[i][j] = arrkas[count];
+                        if(count==arrkas.length) break;
+                        System.out.print(test[i][j]+ "\t");
+                       count++;
+                    }
+                    System.out.println("\t");
+                }
 
 
 
-
-
-
-
-
-
-                new Kontroll(arr);
+                new Kontroll(test);
 
             }
         });
