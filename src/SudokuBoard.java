@@ -1,5 +1,6 @@
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
@@ -8,22 +9,26 @@ import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
+import java.util.ArrayList;
+
 
 public class SudokuBoard extends Application {
-    GridPane box;
+    public static GridPane box;
     Button end;
     public int[][] arr;
     public int[][] masks;
+    public int[][] kasutaja;
+
     int size = 27;
 
     public void start(Stage primaryStage) throws Exception {
+
         Genereernumbrid genNr = new Genereernumbrid(); // toob Genereerinumbritest l
         arr = genNr.getNumbrid();
 
         levelid genLev = new levelid(); // toob Levelist
         masks = genLev.getLevel();
 
-        new Kontroll(arr);
         seadistalevel();
 
 
@@ -56,6 +61,7 @@ public class SudokuBoard extends Application {
                     GridPane.setConstraints(label, row, column);
                     box.getChildren().add(label);
                 } else {
+
                     TextField textField = new TextField("");
                     textField.addEventFilter(KeyEvent.KEY_TYPED, numFilter()); //sisestada tohib ainult numbrid 1-st 9-ni
                     textField.setStyle("-fx-pref-width: 2em;");
@@ -71,13 +77,26 @@ public class SudokuBoard extends Application {
         end.setStyle("-fx-font: 15 arial; -fx-base: #b6e7c9;");
         end.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                Label loppText = new Label("Kas ikka on?");
-                StackPane loppAken = new StackPane();
-                loppAken.getChildren().add(loppText);
+                ArrayList<String> kasutajalt = new ArrayList<>(); //siia kirjutame �les kasutaja maatriksi
+                for (Node node : box.getChildren()) { //skaneerime k�ik laua lahtrid
+                    if (node instanceof TextField) {
+                        kasutajalt.add(((TextField) node).getText().trim());
+                    } else if (node instanceof Label) {
+                        kasutajalt.add(((Label) node).getText().trim());
+                    }
+                }
+                System.out.println(kasutajalt); //vihjed konsooli
 
-                Stage loppStage = new Stage();
-                loppStage.setScene(new Scene(loppAken, 200, 100));
-                loppStage.show();
+
+
+
+
+
+
+
+
+                new Kontroll(arr);
+
             }
         });
         //sudokulaua jooned

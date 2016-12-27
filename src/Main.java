@@ -10,14 +10,21 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-public class kujundus extends Application {
+import java.util.Scanner;
 
-    public static void main(String[] args) {
-        Application.launch(args);
-    }
+public class Main extends Application {
+
 
 
     public void start(Stage primaryStage) {
+        algus();
+
+    }
+
+
+        public void algus() {
+            Stage primaryStage = new Stage();
+
         primaryStage.setTitle("Sudoku");
 
         // VBox
@@ -43,6 +50,7 @@ public class kujundus extends Application {
         btn2.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 lbl.setText("Accepted");
+
             }
         });
 
