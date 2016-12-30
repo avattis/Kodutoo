@@ -48,8 +48,8 @@ public class SudokuBoard extends Application {
             }
         }
 
-        for (int row = 0; row < 9; row++) {
-            for (int column = 0; column < 9; column++) {
+        for (int column = 0; column < 9; column++) {
+            for (int row = 0; row < 9; row++) {
                 if (masks[row][column] == 0) { //null paneb numbri
                     Label label = new Label(Integer.toString(arr[row][column]));
                     label.setStyle("-fx-pref-width: 2em;");
@@ -64,7 +64,7 @@ public class SudokuBoard extends Application {
                     box.getChildren().add(label);
                 } else {
 
-                    TextField textField = new TextField("");
+                    TextField textField = new TextField("0");
                     textField.addEventFilter(KeyEvent.KEY_TYPED, numFilter()); //sisestada tohib ainult numbrid 1-st 9-ni
                     textField.setStyle("-fx-pref-width: 2em;");
                     GridPane.setConstraints(textField, row, column);
@@ -79,34 +79,37 @@ public class SudokuBoard extends Application {
         end.setStyle("-fx-font: 15 arial; -fx-base: #b6e7c9;");
         end.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
+
                 ArrayList<String> kasutajalt = new ArrayList<>(); //siia kirjutame �les kasutaja maatriksi
                 for (Node node : box.getChildren()) { //skaneerime k�ik laua lahtrid
                     if (node instanceof TextField) {
                         kasutajalt.add(((TextField) node).getText().trim());
+                        System.out.println("lahtrid täitmata");
                     } else if (node instanceof Label) {
                         kasutajalt.add(((Label) node).getText().trim());
                     }
                 }
                 System.out.println(kasutajalt); //vihjed konsooli
-                List<Integer> kasutaja = new ArrayList<Integer>();
+
+                List<Integer> kasutajaltInt = new ArrayList<Integer>(); // teen Stringist Integer'i
                 for (Object str : kasutajalt) {
-                    kasutaja.add(Integer.parseInt((String)str));
+                    kasutajaltInt.add(Integer.parseInt((String)str));
                 }
 
-                Integer arrkas[]=kasutaja.toArray(new Integer[kasutaja.size()]);
+                Integer kasutajaArray[]=kasutajaltInt.toArray(new Integer[kasutajaltInt.size()]);
 
 		/*Displaying Array elements*/
-                for(Integer k: arrkas)
+                for(Integer k: kasutajaArray)
                 {
                     System.out.println(k);
                 }
-                Integer test[][]=new Integer[9][9];
+                Integer tulemused[][]=new Integer[9][9];
                 int count = 0;
                 for(int i=0;i<9;i++) {
                     for(int j=0;j<9;j++) {
-                        test[i][j] = arrkas[count];
-                        if(count==arrkas.length) break;
-                        System.out.print(test[i][j]+ "\t");
+                        tulemused[i][j] = kasutajaArray[count];
+                        if(count==kasutajaArray.length) break;
+                        System.out.print(tulemused[i][j]+ "\t");
                        count++;
                     }
                     System.out.println("\t");
@@ -114,7 +117,7 @@ public class SudokuBoard extends Application {
 
 
 
-                new Kontroll(test);
+                new Kontroll(tulemused);
 
             }
         });

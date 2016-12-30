@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class Kontroll {
     static Label loppText = new Label();
 
-    public Kontroll(Integer[][] test) {
+    public Kontroll(Integer[][] tulemused) {
 
         int row = 0;
         int col;
@@ -20,7 +20,7 @@ public class Kontroll {
 
         for (col = 0; col < 9; col++) {
             for (row = 0; row < 9; row++) {
-                rowSum = rowSum + test[row][col];
+                rowSum = rowSum + tulemused[row][col];
             }
             System.out.println("Sum of row " + rowSum);
             if (rowSum == 45) {
@@ -34,7 +34,7 @@ public class Kontroll {
         }
         for (row = 0; row < 9; row++) {
             for (col = 0; col < 9; col++) {
-                colSum = colSum + test[row][col];
+                colSum = colSum + tulemused[row][col];
             }
             System.out.println("Sum of column " + colSum);
             if (colSum == 45) {

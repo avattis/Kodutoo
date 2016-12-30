@@ -32,6 +32,14 @@ public class levelid {
                 }
                 System.out.println();
             }
+        }else if (level == 5) {
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    masks[i][j] = (int) (Math.random() * 1.1);
+                    System.out.print(masks[i][j] + "\t");
+                }
+                System.out.println();
+            }
         }
         else if (level == 3) {
             for (int i = 0; i < 9; i++) {
