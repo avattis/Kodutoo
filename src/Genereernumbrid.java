@@ -30,7 +30,7 @@ public class Genereernumbrid {
 
                 System.out.print(arr[i][j] + "\t");
             }
-            System.out.println("erewrew");
+            System.out.println("\t");
         }
 
         //esimese kolme rea omavaheline vahetus, randomiga leian rea, mida tuua esimeseks

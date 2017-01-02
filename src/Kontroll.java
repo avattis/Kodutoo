@@ -11,7 +11,7 @@ public class Kontroll {
 
     public Kontroll(Integer[][] tulemused) {
 
-        int row = 0;
+        int row;
         int col;
         int rowSum = 0;
         int colSum = 0;
@@ -57,7 +57,6 @@ public class Kontroll {
         Stage loppStage = new Stage();
         loppStage.setScene(new Scene(loppAken, 200, 100));
         loppStage.show();
-
-
     }
+    
 }
