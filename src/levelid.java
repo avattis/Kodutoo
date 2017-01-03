@@ -5,15 +5,17 @@ import java.util.Scanner;
  * Created by annelyvattis on 12/5/16.
  */
 public class levelid {
+    protected String tase;
     private int[][] masks = new int[9][9];
+
 
     public int[][] getLevel() {
         return masks;
     }
 
-    public levelid() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("sisesta nr.");
+
+    public levelid(String tase) {
+        Scanner scanner = new Scanner(tase);
         int level = scanner.nextInt();
         if (level == 1) {
             for (int i = 0; i < 9; i++) {

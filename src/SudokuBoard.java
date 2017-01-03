@@ -14,18 +14,16 @@ import javafx.event.ActionEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+
 
 
 public class SudokuBoard extends Application {
-    public int level;
+    public String tase;
     public static GridPane box;
     Button end;
     public int[][] arr;
     public int[][] masks;
     Stage algaken= new Stage();
-
 
     int size = 27;
 
@@ -35,7 +33,8 @@ public class SudokuBoard extends Application {
         Genereernumbrid genNr = new Genereernumbrid(); // toob Genereerinumbritest l
         arr = genNr.getNumbrid();
 
-        System.out.println("Test" + level);
+        System.out.println("Test" + tase);
+        //levelid level = new levelid(tase);
 
 
 
@@ -60,8 +59,8 @@ public class SudokuBoard extends Application {
 
         btn1.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                int level = 1;
-                System.out.println(level);
+                tase = "1";
+                System.out.println(tase);
                 seadistalevel();
             }
         });
@@ -71,9 +70,10 @@ public class SudokuBoard extends Application {
 
         btn2.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
+
+                tase = "2";
+                System.out.println(tase);
                 seadistalevel();
-                int level = 2;
-                algaken.close();
 
             }
         });
@@ -82,9 +82,10 @@ public class SudokuBoard extends Application {
         btn3.setStyle("-fx-font: 15 arial; -fx-base: #b6e7c9;");
         btn3.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
+
+                tase = "3";
+                System.out.println(tase);
                 seadistalevel();
-                int level = 3;
-                algaken.close();
             }
         });
 
@@ -92,9 +93,21 @@ public class SudokuBoard extends Application {
         btn4.setStyle("-fx-font: 15 arial; -fx-base: #b6e7c9;");
         btn4.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
+
+                tase = "4";
+                System.out.println(tase);
                 seadistalevel();
-                int level = 4;
-                algaken.close();
+            }
+        });
+
+        Button btn5 = new Button("Testimiseks");
+        btn5.setStyle("-fx-font: 15 arial; -fx-base: #b6e7c9;");
+
+        btn5.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                tase = "5";
+                System.out.println(tase);
+                seadistalevel();
             }
         });
 
@@ -102,21 +115,23 @@ public class SudokuBoard extends Application {
         btn2.setMaxWidth(Double.MAX_VALUE);
         btn3.setMaxWidth(Double.MAX_VALUE);
         btn4.setMaxWidth(Double.MAX_VALUE);
+        btn5.setMaxWidth(Double.MAX_VALUE);
 
-        vb.getChildren().addAll(lbl, btn1, btn2,btn3,btn4);
+        vb.getChildren().addAll(lbl, btn1, btn2,btn3,btn4, btn5);
 
         // Adding VBox to the scene
         Scene scene = new Scene(vb);
         algaken.setScene(scene);
         algaken.show();
+
     }
 
 
 
     public void seadistalevel() {
-       // Scanner sc = new Scanner(level);
 
-        levelid genLev = new levelid(); // toob Levelist
+
+        levelid genLev = new levelid(tase); // toob Levelist ja saadab levelisse taseme info
         masks = genLev.getLevel();
 
 
