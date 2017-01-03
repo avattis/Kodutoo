@@ -42,13 +42,13 @@ public class Kontroll {
                 colSum = 0;  // missed this line...
             } else {
                 colSum = 0;
-                loppText = new Label("Kas ikka on?");
+                loppText = new Label("Midagi on valesti!");
                 System.out.println("Midagi on valesti");
             }
         }
         if(rowok == 9 && colok == 9){
             loppText = new Label("Mäng on läbi");
-            System.out.println("Mäng läbi");
+            System.out.println("Kõik on õige!");
         }
 
         StackPane loppAken = new StackPane();
@@ -58,5 +58,5 @@ public class Kontroll {
         loppStage.setScene(new Scene(loppAken, 200, 100));
         loppStage.show();
     }
-    
+
 }

@@ -20,7 +20,7 @@ public class levelid {
         if (level == 1) {
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
-                    masks[i][j] = (int) (Math.random() * 1.7);
+                    masks[i][j] = (int) (Math.random() * 1.4);
                     System.out.print(masks[i][j] + "\t");
                 }
                 System.out.println();
@@ -29,7 +29,7 @@ public class levelid {
         }else if (level == 2) {
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
-                    masks[i][j] = (int) (Math.random() * 1.9);
+                    masks[i][j] = (int) (Math.random() * 1.7);
                     System.out.print(masks[i][j] + "\t");
                 }
                 System.out.println();
@@ -46,7 +46,7 @@ public class levelid {
         else if (level == 3) {
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
-                    masks[i][j] = (int) (Math.random() * 2.7);
+                    masks[i][j] = (int) (Math.random() * 2.2);
                    System.out.print(masks[i][j] + "\t");
                 }
                 System.out.println();
@@ -55,7 +55,7 @@ public class levelid {
         }else if(level == 4){
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
-                    masks[i][j] = (int) (Math.random() * 2.9);
+                    masks[i][j] = (int) (Math.random() * 2.7);
                     System.out.print(masks[i][j] + "\t");
                 }
                 System.out.println();

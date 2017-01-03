@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
@@ -25,18 +26,13 @@ public class SudokuBoard extends Application {
     public int[][] masks;
     Stage algaken= new Stage();
 
-    int size = 27;
+    int size = 40;
 
     public void start(Stage primaryStage) throws Exception {
         algus();
 
         Genereernumbrid genNr = new Genereernumbrid(); // toob Genereerinumbritest l
         arr = genNr.getNumbrid();
-
-        System.out.println("Test" + tase);
-        //levelid level = new levelid(tase);
-
-
 
     }// end start
 
@@ -70,11 +66,9 @@ public class SudokuBoard extends Application {
 
         btn2.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-
                 tase = "2";
                 System.out.println(tase);
                 seadistalevel();
-
             }
         });
 
@@ -82,7 +76,6 @@ public class SudokuBoard extends Application {
         btn3.setStyle("-fx-font: 15 arial; -fx-base: #b6e7c9;");
         btn3.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-
                 tase = "3";
                 System.out.println(tase);
                 seadistalevel();
@@ -93,7 +86,6 @@ public class SudokuBoard extends Application {
         btn4.setStyle("-fx-font: 15 arial; -fx-base: #b6e7c9;");
         btn4.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-
                 tase = "4";
                 System.out.println(tase);
                 seadistalevel();
@@ -102,7 +94,6 @@ public class SudokuBoard extends Application {
 
         Button btn5 = new Button("Testimiseks");
         btn5.setStyle("-fx-font: 15 arial; -fx-base: #b6e7c9;");
-
         btn5.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 tase = "5";
@@ -130,13 +121,10 @@ public class SudokuBoard extends Application {
 
     public void seadistalevel() {
 
-
         levelid genLev = new levelid(tase); // toob Levelist ja saadab levelisse taseme info
         masks = genLev.getLevel();
 
-
-
-        Stage stage = new Stage();
+        Stage stage = new Stage(); //loob uue akna
         AnchorPane anchor = new AnchorPane();
 
         box = new GridPane();
@@ -151,73 +139,93 @@ public class SudokuBoard extends Application {
             for (int row = 0; row < 9; row++) {
                 if (masks[row][column] == 0) { //null paneb numbri
                     Label label = new Label(Integer.toString(arr[row][column]));
-                    label.setStyle("-fx-pref-width: 2em;");
                     label.setTranslateX(10.0);
-                    label.setStyle("-fx-font-size: 12px;"
+                    label.setStyle("-fx-font-size: 19px;"
                             + "-fx-font-style: italic;"
                             + "-fx-alignment: center;"
                             + "-fx-font-weight: bold;"
-                            + "-fx-font-family: Arial Black;"
                             + "-fx-text-fill: green;");
                     GridPane.setConstraints(label, row, column);
                     box.getChildren().add(label);
                 } else {
 
-                    TextField textField = new TextField("0");
+                    TextField textField = new TextField("");
                     textField.addEventFilter(KeyEvent.KEY_TYPED, numFilter()); //sisestada tohib ainult numbrid 1-st 9-ni
-                    textField.setStyle("-fx-pref-width: 2em;");
+                    textField.setStyle("-fx-font-weight: bold;"
+                            +"-fx-font-size: 19px;"
+                            + "-fx-alignment: center;");
                     GridPane.setConstraints(textField, row, column);
                     box.getChildren().add(textField);
                 }//end else
             }//end for
         }// end for
 
-        box.setGridLinesVisible(true);
+        box.setGridLinesVisible(true); //laual tulevad nähtavale kõik jooned
 
         end = new Button("Lõpeta mäng");
         end.setStyle("-fx-font: 15 arial; -fx-base: #b6e7c9;");
         end.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
 
+
                 ArrayList<String> kasutajalt = new ArrayList<>(); //siia kirjutame �les kasutaja maatriksi
                 for (Node node : box.getChildren()) { //skaneerime k�ik laua lahtrid
                     if (node instanceof TextField) {
                         kasutajalt.add(((TextField) node).getText().trim());
-                        System.out.println("lahtrid täitmata");
+
                     } else if (node instanceof Label) {
                         kasutajalt.add(((Label) node).getText().trim());
                     }
                 }
                 System.out.println(kasutajalt); //vihjed konsooli
+                int loendur = 0;
 
-                List<Integer> kasutajaltInt = new ArrayList<Integer>(); // teen Stringist Integer'i
-                for (Object str : kasutajalt) {
-                    kasutajaltInt.add(Integer.parseInt((String)str));
+                for (String item : kasutajalt) {
+                    if (!item.isEmpty()) {
+                        loendur++;
+                        System.out.println("Mitu korda?");
+                    } else {
+                        StackPane vaheteade = new StackPane();
+                        Label teade = new Label("Kõik väljad pole täidetud");
+                        vaheteade.getChildren().add(teade);
+                        Stage vaheStage = new Stage();
+                        vaheStage.setScene(new Scene(vaheteade, 200, 100));
+                        vaheStage.show();
+
+                        teade.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+                                vaheStage.close();
+                            }
+                        });
+                        break;
+
+                    }
                 }
-
-                Integer kasutajaArray[]=kasutajaltInt.toArray(new Integer[kasutajaltInt.size()]);
+                if(loendur == 81){
+                    List<Integer> kasutajaltInt = new ArrayList<Integer>(); // teen Stringist Integer'i
+                    for (Object str : kasutajalt) {
+                            kasutajaltInt.add(Integer.parseInt((String) str));
+                    }
+                    Integer kasutajaArray[] = kasutajaltInt.toArray(new Integer[kasutajaltInt.size()]);
 
 		/*Displaying Array elements*/
-                for(Integer k: kasutajaArray)
-                {
-                    System.out.println(k);
-                }
-                Integer tulemused[][]=new Integer[9][9];
-                int count = 0;
-                for(int i=0;i<9;i++) {
-                    for(int j=0;j<9;j++) {
-                        tulemused[i][j] = kasutajaArray[count];
-                        if(count==kasutajaArray.length) break;
-                        System.out.print(tulemused[i][j]+ "\t");
-                       count++;
+		            for (Integer k : kasutajaArray) {
+                            System.out.println(k);
                     }
-                    System.out.println("\t");
+                    Integer tulemused[][] = new Integer[9][9];
+                    int count = 0;
+                    for (int i = 0; i < 9; i++) {
+                        for (int j = 0; j < 9; j++) {
+                            tulemused[i][j] = kasutajaArray[count];
+                            if (count == kasutajaArray.length) break;
+                                System.out.print(tulemused[i][j] + "\t");
+                                count++;
+                        }
+                        System.out.println("\t");
+                    }
+                    new Kontroll(tulemused);
                 }
-
-
-
-                new Kontroll(tulemused);
-
             }
         });
         //sudokulaua jooned
@@ -250,7 +258,7 @@ public class SudokuBoard extends Application {
         anchor.setBottomAnchor(end, 20.0);
         anchor.setRightAnchor(end, 20.0);
 
-        stage.setScene(new Scene(anchor, 400,300));
+        stage.setScene(new Scene(anchor, 500,400));
         stage.show();
         algaken.close();
 
