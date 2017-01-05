@@ -1,5 +1,9 @@
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -8,6 +12,7 @@ import javafx.stage.Stage;
  */
 public class Kontroll {
     static Label loppText = new Label();
+    private Stage loppStage = new Stage();
 
     public Kontroll(Integer[][] tulemused) {
 
@@ -51,12 +56,22 @@ public class Kontroll {
             System.out.println("Kõik on õige!");
         }
 
+
+
+
         StackPane loppAken = new StackPane();
         loppAken.getChildren().add(loppText);
-
-        Stage loppStage = new Stage();
         loppStage.setScene(new Scene(loppAken, 200, 100));
         loppStage.show();
+        loppAken.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                loppStage.close();
+            }
+        });
+
     }
+
+
 
 }

@@ -21,7 +21,7 @@ import java.util.List;
 public class SudokuBoard extends Application {
     public String tase;
     public static GridPane box;
-    Button end;
+    Button kontrolli;
     public int[][] arr;
     public int[][] masks;
     Stage algaken= new Stage();
@@ -117,8 +117,6 @@ public class SudokuBoard extends Application {
 
     }
 
-
-
     public void seadistalevel() {
 
         levelid genLev = new levelid(tase); // toob Levelist ja saadab levelisse taseme info
@@ -134,7 +132,6 @@ public class SudokuBoard extends Application {
                 box.getRowConstraints().add(new RowConstraints(size)); //rea kõrgus
             }
         }
-
         for (int column = 0; column < 9; column++) {
             for (int row = 0; row < 9; row++) {
                 if (masks[row][column] == 0) { //null paneb numbri
@@ -162,9 +159,9 @@ public class SudokuBoard extends Application {
 
         box.setGridLinesVisible(true); //laual tulevad nähtavale kõik jooned
 
-        end = new Button("Lõpeta mäng");
-        end.setStyle("-fx-font: 15 arial; -fx-base: #b6e7c9;");
-        end.setOnAction(new EventHandler<ActionEvent>() {
+        kontrolli = new Button("Kontrolli");
+        kontrolli.setStyle("-fx-font: 15 arial; -fx-base: #b6e7c9;");
+        kontrolli.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
 
 
@@ -192,8 +189,7 @@ public class SudokuBoard extends Application {
                         vaheStage.setScene(new Scene(vaheteade, 200, 100));
                         vaheStage.show();
 
-                        teade.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                            @Override
+                        vaheteade.setOnMouseClicked(new EventHandler<MouseEvent>() {
                             public void handle(MouseEvent event) {
                                 vaheStage.close();
                             }
@@ -228,6 +224,23 @@ public class SudokuBoard extends Application {
                 }
             }
         });
+        Button close = new Button("Sulge kõik");
+        close.setStyle("-fx-font: 15 arial; -fx-base: #b6e7c9;");
+        close.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                stage.close();
+            }
+        });
+
+        Button alustaUuesti = new Button("Uus mäng");
+        alustaUuesti.setStyle("-fx-font: 15 arial; -fx-base: #b6e7c9;");
+        alustaUuesti.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                stage.close();
+                algaken.show();
+            }
+        });
+
         //sudokulaua jooned
         int yks = 5;
         int kaks = 3*size+5;
@@ -252,11 +265,16 @@ public class SudokuBoard extends Application {
 
 
 
-        anchor.getChildren().addAll(box, end, line,line1,line2,line3,line4,line5,line6,line7);
+        anchor.getChildren().addAll(box, kontrolli, close,alustaUuesti, line,line1,line2,line3,line4,line5,line6,line7);
         anchor.setLeftAnchor(box, 5.0);
         anchor.setTopAnchor(box, 5.0);
-        anchor.setBottomAnchor(end, 20.0);
-        anchor.setRightAnchor(end, 20.0);
+        anchor.setBottomAnchor(kontrolli, 100.0);
+        anchor.setRightAnchor(kontrolli, 20.0);
+        anchor.setBottomAnchor(close, 20.0);
+        anchor.setRightAnchor(close, 20.0);
+        anchor.setBottomAnchor(alustaUuesti, 60.0);
+        anchor.setRightAnchor(alustaUuesti, 20.0);
+        
 
         stage.setScene(new Scene(anchor, 500,400));
         stage.show();
