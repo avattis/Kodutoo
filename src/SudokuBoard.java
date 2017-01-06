@@ -1,3 +1,4 @@
+/* */
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -12,37 +13,32 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
-
 import java.util.ArrayList;
 import java.util.List;
-
-
 
 public class SudokuBoard extends Application {
     public String tase;
     public static GridPane box;
     Button kontrolli;
-    public int[][] arr;
-    public int[][] masks;
+    public int[][] Sudokunumbrid;
+    public int[][] Tyhjadkohad;
     Stage algaken= new Stage();
 
-    int size = 40;
+    int size = 40; //
 
     public void start(Stage primaryStage) throws Exception {
         algus();
 
         Genereernumbrid genNr = new Genereernumbrid(); // toob Genereerinumbritest l
-        arr = genNr.getNumbrid();
+        Sudokunumbrid = genNr.getNumbrid();
 
     }// end start
 
     private void algus() {
-        algaken= new Stage();
+        algaken= new Stage(); //loob esimeseakna
         algaken.setTitle("Sudoku");
 
-
-        // VBox
-        VBox vb = new VBox();
+        VBox vb = new VBox(); // VBox
         vb.setPadding(new Insets(10, 50, 50, 50));
         vb.setSpacing(10);
 
@@ -101,7 +97,7 @@ public class SudokuBoard extends Application {
                 seadistalevel();
             }
         });
-
+        // muudab nupud esilehel ühesuuruseks
         btn1.setMaxWidth(Double.MAX_VALUE);
         btn2.setMaxWidth(Double.MAX_VALUE);
         btn3.setMaxWidth(Double.MAX_VALUE);
@@ -110,8 +106,7 @@ public class SudokuBoard extends Application {
 
         vb.getChildren().addAll(lbl, btn1, btn2,btn3,btn4, btn5);
 
-        // Adding VBox to the scene
-        Scene scene = new Scene(vb);
+        Scene scene = new Scene(vb); // paneb VBox scene'i
         algaken.setScene(scene);
         algaken.show();
 
@@ -120,12 +115,12 @@ public class SudokuBoard extends Application {
     public void seadistalevel() {
 
         levelid genLev = new levelid(tase); // toob Levelist ja saadab levelisse taseme info
-        masks = genLev.getLevel();
+        Tyhjadkohad = genLev.getLevel();
 
         Stage stage = new Stage(); //loob uue akna
-        AnchorPane anchor = new AnchorPane();
+        AnchorPane anchor = new AnchorPane(); //
 
-        box = new GridPane();
+        box = new GridPane(); //grid sudokulaua jaoks
         for (int i = 0; i < 9; i++) {
             box.getColumnConstraints().add(new ColumnConstraints(size)); //veeru laius
             for (int j = 0; j < 1; j++) {
@@ -134,8 +129,8 @@ public class SudokuBoard extends Application {
         }
         for (int column = 0; column < 9; column++) {
             for (int row = 0; row < 9; row++) {
-                if (masks[row][column] == 0) { //null paneb numbri
-                    Label label = new Label(Integer.toString(arr[row][column]));
+                if (Tyhjadkohad[row][column] == 0) { //null paneb numbri
+                    Label label = new Label(Integer.toString(Sudokunumbrid[row][column])); //teeb numbrist sõne ja paneb labelisse
                     label.setTranslateX(10.0);
                     label.setStyle("-fx-font-size: 19px;"
                             + "-fx-font-style: italic;"
@@ -146,7 +141,7 @@ public class SudokuBoard extends Application {
                     box.getChildren().add(label);
                 } else {
 
-                    TextField textField = new TextField("");
+                    TextField textField = new TextField(""); //tühi texti väli
                     textField.addEventFilter(KeyEvent.KEY_TYPED, numFilter()); //sisestada tohib ainult numbrid 1-st 9-ni
                     textField.setStyle("-fx-font-weight: bold;"
                             +"-fx-font-size: 19px;"
@@ -164,7 +159,6 @@ public class SudokuBoard extends Application {
         kontrolli.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
 
-
                 ArrayList<String> kasutajalt = new ArrayList<>(); //siia kirjutame �les kasutaja maatriksi
                 for (Node node : box.getChildren()) { //skaneerime k�ik laua lahtrid
                     if (node instanceof TextField) {
@@ -177,11 +171,11 @@ public class SudokuBoard extends Application {
                 System.out.println(kasutajalt); //vihjed konsooli
                 int loendur = 0;
 
-                for (String item : kasutajalt) {
-                    if (!item.isEmpty()) {
-                        loendur++;
-                        System.out.println("Mitu korda?");
-                    } else {
+                for (String item : kasutajalt) { //võtab eelmise listi, mis saadi kasutajalt
+                    if (!item.isEmpty()) { //kontrollib üle, kas on koht on täidetud (et poleks tühi koht)
+                        loendur++; //loeb kokku täidetud kohad
+                        System.out.println(loendur + " täis lahter");
+                    } else { // kui tuleb tühikoht, siis annab veateate
                         StackPane vaheteade = new StackPane();
                         Label teade = new Label("Kõik väljad pole täidetud");
                         vaheteade.getChildren().add(teade);
@@ -189,23 +183,21 @@ public class SudokuBoard extends Application {
                         vaheStage.setScene(new Scene(vaheteade, 200, 100));
                         vaheStage.show();
 
-                        vaheteade.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        vaheteade.setOnMouseClicked(new EventHandler<MouseEvent>() {  // veateate akna saab sulgeda klikiga aknas
                             public void handle(MouseEvent event) {
                                 vaheStage.close();
                             }
                         });
-                        break;
+                        break; //katkestab listi kontrolli, kui on jõudnud esimese veani
 
                     }
                 }
-                if(loendur == 81){
-                    List<Integer> kasutajaltInt = new ArrayList<Integer>(); // teen Stringist Integer'i
+                if(loendur == 81){ //kui kõik kohad on täidetud
+                    List<Integer> kasutajaltInt = new ArrayList<Integer>(); // teeb Stringist Integer'i
                     for (Object str : kasutajalt) {
                             kasutajaltInt.add(Integer.parseInt((String) str));
                     }
                     Integer kasutajaArray[] = kasutajaltInt.toArray(new Integer[kasutajaltInt.size()]);
-
-		/*Displaying Array elements*/
 		            for (Integer k : kasutajaArray) {
                             System.out.println(k);
                     }
@@ -241,11 +233,12 @@ public class SudokuBoard extends Application {
             }
         });
 
-        //sudokulaua jooned
+        //sudokulaua jooned boldid jooned
         int yks = 5;
         int kaks = 3*size+5;
         int kolm = 6*size+5;
         int neli = 9*size+5;
+
         Line line = new Line(yks, yks, yks, neli);
         line.setStyle("-fx-stroke: black;-fx-stroke-width: 3;");
         Line line1 = new Line(kaks, yks, kaks, neli);
@@ -266,6 +259,7 @@ public class SudokuBoard extends Application {
 
 
         anchor.getChildren().addAll(box, kontrolli, close,alustaUuesti, line,line1,line2,line3,line4,line5,line6,line7);
+        //gridi ja nuppude asetused anchorpane'il
         anchor.setLeftAnchor(box, 5.0);
         anchor.setTopAnchor(box, 5.0);
         anchor.setBottomAnchor(kontrolli, 100.0);

@@ -1,15 +1,8 @@
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Random;
-
-
-/**
- * Created by annelyvattis on 10/27/16.
+/* Etteantud Sudoku numbrid, mida segatakse. Segamine toimub nii veerus kui reas, kolmeste plokkidena.
+Millise kolmest rea/veeru tõstab esimeseks võtab iga grupi puhul erineva või siis ei muuda üldse.
  */
 public class Genereernumbrid {
-    private int[][] arr = new int[][]
+    private int[][] Sudokunumbrid = new int[][]
                     {{5, 3, 4, 6, 7, 8, 9, 1, 2},
                     {6, 7, 2, 1, 9, 5, 3, 4, 8},
                     {1, 9, 8, 3, 4, 2, 5, 6, 7},
@@ -21,14 +14,14 @@ public class Genereernumbrid {
                     {3, 4, 5, 2, 8, 6, 1, 7, 9}};
 
     public int[][] getNumbrid() {
-        return arr;
+        return Sudokunumbrid;
     }
 
     public Genereernumbrid() {
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[i].length; j++) {
-
-                System.out.print(arr[i][j] + "\t");
+        System.out.println("Enne segamist");
+       for (int i = 0; i < Sudokunumbrid.length; i++) {
+            for (int j = 0; j < Sudokunumbrid[i].length; j++) {
+                System.out.print(Sudokunumbrid[i][j] + "\t");
             }
             System.out.println("\t");
         }
@@ -36,62 +29,56 @@ public class Genereernumbrid {
         //esimese kolme rea omavaheline vahetus, randomiga leian rea, mida tuua esimeseks
         int rowswap = (int) (Math.random() * 3);
         System.out.println(rowswap);
-        for (int i = 0; i < arr[rowswap].length; i++) {
-            // store the value of highest row
-            int temp = arr[rowswap][i];
-            // swap the value of highest row with first row
-            arr[rowswap][i] = arr[0][i];
-            // set the value of first row that is stored in temp
-            arr[0][i] = temp;
+        for (int i = 0; i < Sudokunumbrid[rowswap].length; i++) {
+            int temp = Sudokunumbrid[rowswap][i];   // salvestab mällu kõrgeima leitud rea
+            Sudokunumbrid[rowswap][i] = Sudokunumbrid[0][i];    // tõstab esimese rea eelnevalt leitud rea kohale
+            Sudokunumbrid[0][i] = temp;             // mällu salvestatud rea tõstab esimesele reale
         }
         // järgmise kolme rea vahetus
         int rowswap2 = (int) (Math.random() * 3);
         System.out.println(rowswap2);
-        for (int i = 0; i < arr[3 + rowswap2].length; i++) {
-            int temp = arr[3 + rowswap2][i];
-            arr[3+rowswap2][i] = arr[3][i];
-            arr[3][i] = temp;
+        for (int i = 0; i < Sudokunumbrid[3 + rowswap2].length; i++) {
+            int temp = Sudokunumbrid[3 + rowswap2][i];
+            Sudokunumbrid[3+rowswap2][i] = Sudokunumbrid[3][i];
+            Sudokunumbrid[3][i] = temp;
         }
         // viimase kolme reavahetus
         int rowswap3 = (int) (Math.random() * 3);
         System.out.println(rowswap3);
-        for (int i = 0; i < arr[6 + rowswap3].length; i++) {
-            int temp = arr[6 + rowswap3][i];
-            arr[6+rowswap3][i] = arr[6][i];
-            arr[6][i] = temp;
+        for (int i = 0; i < Sudokunumbrid[6 + rowswap3].length; i++) {
+            int temp = Sudokunumbrid[6 + rowswap3][i];
+            Sudokunumbrid[6+rowswap3][i] = Sudokunumbrid[6][i];
+            Sudokunumbrid[6][i] = temp;
         }
         //esimese kolme veeru omavaheline vahetus, randomiga leian rea, mida tuua esimeseks
         int cellSwap = (int) (Math.random() * 3);
-        System.out.println(rowswap);
-        for (int j = 0; j < arr[cellSwap].length; j++) {
-            // store the value of highest cell
-            int temp = arr[j][cellSwap];
-            // swap the value of highest cell with first cell
-            arr[j][cellSwap] = arr[j][0];
-            // set the value of first cell that is stored in temp
-            arr[j][0] = temp;
+        System.out.println(cellSwap);
+        for (int j = 0; j < Sudokunumbrid[cellSwap].length; j++) {
+            int temp = Sudokunumbrid[j][cellSwap];
+            Sudokunumbrid[j][cellSwap] = Sudokunumbrid[j][0];
+            Sudokunumbrid[j][0] = temp;
         }
         // järgmise kolme veeru vahetus
         int cellswap2 = (int) (Math.random() * 3);
         System.out.println(cellswap2);
-        for (int j = 0; j < arr[3 + cellswap2].length; j++) {
-            int temp = arr[j][3+cellswap2];
-            arr[j][3+cellswap2] = arr[j][3];
-            arr[j][3] = temp;
+        for (int j = 0; j < Sudokunumbrid[3 + cellswap2].length; j++) {
+            int temp = Sudokunumbrid[j][3+cellswap2];
+            Sudokunumbrid[j][3+cellswap2] = Sudokunumbrid[j][3];
+            Sudokunumbrid[j][3] = temp;
         }
         // viimase kolme veeru vahetus
         int cellSwap3 = (int) (Math.random() * 3);
         System.out.println(cellSwap3);
-        for (int j = 0; j < arr[6 + cellSwap3].length; j++) {
-            int temp = arr[j][6 + cellSwap3];
-            arr[j][6 + cellSwap3] = arr[j][6];
-            arr[j][6] = temp;
+        for (int j = 0; j < Sudokunumbrid[6 + cellSwap3].length; j++) {
+            int temp = Sudokunumbrid[j][6 + cellSwap3];
+            Sudokunumbrid[j][6 + cellSwap3] = Sudokunumbrid[j][6];
+            Sudokunumbrid[j][6] = temp;
         }
 
-        System.out.println("After swapping");
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[i].length; j++) {
-                System.out.print(arr[i][j] + "\t");
+        System.out.println("Pärast segamist");
+        for (int i = 0; i < Sudokunumbrid.length; i++) {
+            for (int j = 0; j < Sudokunumbrid[i].length; j++) {
+                System.out.print(Sudokunumbrid[i][j] + "\t");
             }
             System.out.println();
         }
